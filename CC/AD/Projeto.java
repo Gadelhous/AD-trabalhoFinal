@@ -1,6 +1,8 @@
+import java.util.Arrays;
+import java.util.List;
+
 public class Projeto {
 
-    //private ArrayList<Sistema> sistemas;
     public static void main(String[] args) {
 
         int numeroSistemas = 100;
@@ -24,22 +26,5 @@ public class Projeto {
                 System.out.println("A média de tempo no sistema " +tipoServidor.toString()+ " com lambda igual a " +lambda+  " por cada cliente é de: " +mediaTempoNoSistema);
             }
         }
-
-        System.out.println("A média de tempo esperado no sistema exponencial por cada cliente é de: " +mediaGeralExponencial);
-        System.out.println("A média de tempo esperado no sistema estático por cada cliente é de: " +mediaGeralEstatico);
-
-
-        /*
-        double media = 0;
-        for (int i = 0; i < 1000000; i++) {
-            Poisson poisson = new Poisson();
-            media += (poisson.getInterval(0, 1)/1000000);
-        }
-
-        System.out.println("Media poisson:" +media);
-
-         */
-
     }
-
 }
