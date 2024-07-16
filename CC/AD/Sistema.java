@@ -22,8 +22,9 @@ public class Sistema {
         this.clientesCompletos = new ArrayList<>();
     }
 
+
     public OptionalDouble calculaMedia(){
-       return clientesCompletos.stream().mapToDouble(cliente -> cliente.getTempoSaida() - cliente.getTempoChegada()).average();
+        return clientesCompletos.stream().mapToDouble(cliente -> cliente.getTempoSaida() - cliente.getTempoChegada()).average();
     }
 
     public void simula()

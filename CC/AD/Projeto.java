@@ -2,21 +2,27 @@ public class Projeto {
 
     //private ArrayList<Sistema> sistemas;
     public static void main(String[] args) {
-        double mediaGeralExponencial = 0;
-        double mediaGeralEstatico = 0;
+
         int numeroSistemas = 100;
+        double mu = 1;
+        double maxTempoSimulacao = 10000;
 
-        for (int i = 0; i < numeroSistemas; i++) {
-            Sistema sistemaExponencial = new Sistema(TipoServidor.Exponencial,1,0.99,1000);
-            sistemaExponencial.simula();
-            mediaGeralExponencial += (sistemaExponencial.calculaMedia().getAsDouble() / numeroSistemas);
+        List<Double> lambdas =  Arrays.asList(0.5, 0.8, 0.9, 0.99);
+        List<TipoServidor> tipoServidores = Arrays.asList(TipoServidor.Exponencial, TipoServidor.Constante);
 
+        for (double lambda: lambdas) {
+            for(TipoServidor tipoServidor: tipoServidores) {
 
+                double mediaTempoNoSistema = 0;
 
+                for (int i = 0; i < numeroSistemas; i++) {
+                    Sistema sistemaExponencial = new Sistema(tipoServidor, mu, lambda, maxTempoSimulacao);
+                    sistemaExponencial.simula();
+                    mediaTempoNoSistema += (sistemaExponencial.calculaMedia().getAsDouble() / numeroSistemas);
+                }
 
-            Sistema sistemaEstatico = new Sistema(TipoServidor.Constante,1,0.99,1000);
-            sistemaEstatico.simula();
-            mediaGeralEstatico += (sistemaEstatico.calculaMedia().getAsDouble() / numeroSistemas);
+                System.out.println("A média de tempo no sistema " +tipoServidor.toString()+ " com lambda igual a " +lambda+  " por cada cliente é de: " +mediaTempoNoSistema);
+            }
         }
 
         System.out.println("A média de tempo esperado no sistema exponencial por cada cliente é de: " +mediaGeralExponencial);
