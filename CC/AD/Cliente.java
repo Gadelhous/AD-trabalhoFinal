@@ -7,12 +7,6 @@ public class Cliente {
         return tempoChegada;
     }
 
-    /*
-    public void setTempoChegada(double tempoChegada) {
-        this.tempoChegada = tempoChegada;
-    }
-     */
-
     public double getTempoSaida() {
         return tempoSaida;
     }

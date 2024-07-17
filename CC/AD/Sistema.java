@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.OptionalDouble;
 
 public class Sistema {
 
@@ -23,15 +22,17 @@ public class Sistema {
     }
 
 
-    public OptionalDouble calculaMedia(){
-        return clientesCompletos.stream().mapToDouble(cliente -> cliente.getTempoSaida() - cliente.getTempoChegada()).average();
+    public double calculaMedia(){
+        //o .orElseThrow() foi adicionado para não ficar a má pratica de utilizar um Optional sem checar sua existência
+        return clientesCompletos.stream().mapToDouble(cliente -> cliente.getTempoSaida() - cliente.getTempoChegada()).average().orElseThrow();
     }
 
     public void simula()
     {
         double currentTime = 0;
+        double tempoTransiente = this.maxTempoSimulacao/10;
 
-        while(currentTime < this.maxTempoSimulacao)
+        while(currentTime < this.maxTempoSimulacao + tempoTransiente)
         {
             // Calcula proxima chegada,
             double tempoChegadaClientePrecedente = this.fila.getTempoChegadaClientePrecedente();
@@ -61,10 +62,13 @@ public class Sistema {
             if(this.servidor.getProxTempoOcioso() <= currentTime)
             {
                 Cliente cliente = this.fila.popCliente();
+                cliente = servidor.serveCliente(cliente, currentTime);
 
-                this.clientesCompletos.add(
-                        servidor.serveCliente(cliente, currentTime)
-                );
+                if(currentTime > tempoTransiente){
+                    this.clientesCompletos.add(
+                            cliente
+                    );
+                }
             }
         }
     }

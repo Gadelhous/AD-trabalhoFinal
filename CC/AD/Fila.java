@@ -14,7 +14,7 @@ public class Fila {
         return tempoChegadaClientePrecedente;
     }
 
-    public double getTempoChegadaClienteProximo() { return clientes.getFirst().getTempoChegada(); }
+    public double getTempoChegadaProximoClienteDaFila() { return clientes.get(0).getTempoChegada(); }
 
     public void pushCliente(Cliente cliente){
         tempoChegadaClientePrecedente = cliente.getTempoChegada();
@@ -22,7 +22,7 @@ public class Fila {
     }
 
     public Cliente popCliente(){
-        Cliente proximoCLiente = clientes.getFirst();
+        Cliente proximoCLiente = clientes.get(0);
         clientes.remove(proximoCLiente);
         return proximoCLiente;
     }
