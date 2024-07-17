@@ -47,15 +47,19 @@ public class Sistema {
             }
 
             /*
-                Proximo evento sera:
-                    servir o proximo cliente da fila
-                        (tempo maximo entre := tempo de chegada ou no tempo que servidor ficar ocioso)
-                    calcula chegada de cliente
-                        se servidor ainda ocioso quando ocorreu ultima chegada
+                Próximo evento será (ou exclusivo):
+                    - Servir o próximo cliente da fila
+                        Tempo máximo entre (tempo de chegada do próximo cliente, tempo que o servidor ficará ocioso).
+                    - Chegada de cliente
+                        Se o servidor ainda estiver ocupado quando ocorreu última chegada, calculará a próxima.
+
+               proxTempoOcioso > tempoChegadaClienteProximo ? (proxTempoOcioso < tempoChegadaCLientePrecedente ? proxTempoOcioso : tempoChegadaClientePrecedente)
+                            : (tempoChegadaCLienteProximo < tempoChegadaClientePrecedente ? tempoChegadaClienteProximo : tempoChegadaClientePrecedente)
+
              */
             currentTime = Math.min(
-                    Math.max(this.servidor.getProxTempoOcioso(), this.fila.getTempoChegadaClienteProximo()),
-                    this.fila.getTempoChegadaClientePrecedente()
+                    Math.max(this.servidor.getProxTempoOcioso(), this.fila.getTempoChegadaProximoClienteDaFila()), // Serve próximo cliente
+                    this.fila.getTempoChegadaClientePrecedente() // Calcula próxima chegada de cliente ao sistema
             );
 
             // Serve proximo cliente, se servidor ocioso
