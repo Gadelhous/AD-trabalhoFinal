@@ -40,7 +40,7 @@ public class Servidor {
         Lambda = 1.
      */
     private double calculaTempoSaida(double currentTime){
-        if(tipoServidor.equals(TipoServidor.Constante))
+        if(tipoServidor.equals(TipoServidor.Deterministico))
         {
             return currentTime + mu;
         }

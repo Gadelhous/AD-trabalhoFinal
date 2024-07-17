@@ -1,3 +1,3 @@
 public enum TipoServidor {
-    Constante, Exponencial
+    Deterministico, Exponencial
 }

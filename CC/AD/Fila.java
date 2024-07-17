@@ -2,36 +2,29 @@ import java.util.ArrayList;
 
 public class Fila {
 
-    private ArrayList<Cliente> processos;
-
+    private final ArrayList<Cliente> clientes;
     private double tempoChegadaClientePrecedente;
 
     public Fila() {
-        this.processos = new ArrayList<>();
+        this.clientes = new ArrayList<>();
         this.tempoChegadaClientePrecedente = 0;
-    }
-
-    public void pushCliente(Cliente cliente){
-        tempoChegadaClientePrecedente = cliente.getTempoChegada();
-        processos.add(cliente);
     }
 
     public double getTempoChegadaClientePrecedente() {
         return tempoChegadaClientePrecedente;
     }
 
-    public void setTempoChegadaClientePrecedente(double tempoChegadaClientePrecedente) {
-        this.tempoChegadaClientePrecedente = tempoChegadaClientePrecedente;
+    public double getTempoChegadaClienteProximo() { return clientes.getFirst().getTempoChegada(); }
+
+    public void pushCliente(Cliente cliente){
+        tempoChegadaClientePrecedente = cliente.getTempoChegada();
+        clientes.add(cliente);
     }
 
     public Cliente popCliente(){
-        Cliente proximoCLiente = processos.get(0);
-        processos.remove(proximoCLiente);
+        Cliente proximoCLiente = clientes.getFirst();
+        clientes.remove(proximoCLiente);
         return proximoCLiente;
-        //
     }
 
-    public ArrayList<Cliente> getProcessos() {
-        return processos;
-    }
 }

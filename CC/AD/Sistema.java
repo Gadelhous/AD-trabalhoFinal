@@ -3,13 +3,13 @@ import java.util.OptionalDouble;
 
 public class Sistema {
 
-    private double lambda;
-    private double maxTempoSimulacao;
+    private final double lambda;
+    private final double maxTempoSimulacao;
 
-    private Poisson poisson;
-    private Servidor servidor;
-    private Fila fila;
-    private ArrayList<Cliente> clientesCompletos;
+    private final Poisson poisson;
+    private final Servidor servidor;
+    private final Fila fila;
+    private final ArrayList<Cliente> clientesCompletos;
 
     public Sistema(TipoServidor tipoServidor, double mu, double lambda, double maxTempoSimulacao){
 
@@ -33,6 +33,7 @@ public class Sistema {
 
         while(currentTime < this.maxTempoSimulacao)
         {
+            // Calcula proxima chegada,
             double tempoChegadaClientePrecedente = this.fila.getTempoChegadaClientePrecedente();
             if(tempoChegadaClientePrecedente <= currentTime)
             {
@@ -44,19 +45,27 @@ public class Sistema {
                 this.fila.pushCliente(proxCliente);
             }
 
-            // proxTempoOcioso ou currentTime
+            /*
+                Proximo evento sera:
+                    servir o proximo cliente da fila
+                        (tempo maximo entre := tempo de chegada ou no tempo que servidor ficar ocioso)
+                    calcula chegada de cliente
+                        se servidor ainda ocioso quando ocorreu ultima chegada
+             */
+            currentTime = Math.min(
+                    Math.max(this.servidor.getProxTempoOcioso(), this.fila.getTempoChegadaClienteProximo()),
+                    this.fila.getTempoChegadaClientePrecedente()
+            );
+
+            // Serve proximo cliente, se servidor ocioso
             if(this.servidor.getProxTempoOcioso() <= currentTime)
             {
                 Cliente cliente = this.fila.popCliente();
-
-                currentTime = Math.max(cliente.getTempoChegada(), currentTime);
 
                 this.clientesCompletos.add(
                         servidor.serveCliente(cliente, currentTime)
                 );
             }
-
-            currentTime = Math.min(this.servidor.getProxTempoOcioso(), this.fila.getTempoChegadaClientePrecedente());
         }
     }
 

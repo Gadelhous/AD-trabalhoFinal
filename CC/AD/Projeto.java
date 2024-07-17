@@ -10,7 +10,7 @@ public class Projeto {
         double maxTempoSimulacao = 10000;
 
         List<Double> lambdas =  Arrays.asList(0.5, 0.8, 0.9, 0.99);
-        List<TipoServidor> tipoServidores = Arrays.asList(TipoServidor.Exponencial, TipoServidor.Constante);
+        List<TipoServidor> tipoServidores = Arrays.asList(TipoServidor.Exponencial, TipoServidor.Deterministico);
 
         for (double lambda: lambdas) {
             for(TipoServidor tipoServidor: tipoServidores) {
